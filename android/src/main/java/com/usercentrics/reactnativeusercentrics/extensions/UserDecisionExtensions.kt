@@ -15,7 +15,7 @@ internal fun ReadableArray.deserializeUserDecision(): List<UserDecision> {
         val map = getMap(i)
         decisionList.add(
             UserDecision(
-                map.getString("serviceId")!!,
+                map?.getString("serviceId")!!,
                 map.getBoolean("consent")
             )
         )
@@ -27,7 +27,7 @@ internal fun ReadableMap.deserializeTCFUserDecisions(): TCFUserDecisions {
     val purposes = getArray("purposes")?.let {
         val list = mutableListOf<TCFUserDecisionOnPurpose>()
         for (i in 0 until it.size()) {
-            list.add(it.getMap(i).deserializeTCFUserDecisionOnPurpose())
+            it.getMap(i)?.let { it1 -> list.add(it1.deserializeTCFUserDecisionOnPurpose()) }
         }
         list
     }
@@ -35,7 +35,7 @@ internal fun ReadableMap.deserializeTCFUserDecisions(): TCFUserDecisions {
     val specialFeature = getArray("specialFeatures")?.let {
         val list = mutableListOf<TCFUserDecisionOnSpecialFeature>()
         for (i in 0 until it.size()) {
-            list.add(it.getMap(i).deserializeTCFUserDecisionOnSpecialFeature())
+            it.getMap(i)?.let { it1 -> list.add(it1.deserializeTCFUserDecisionOnSpecialFeature()) }
         }
         list
     }
@@ -43,7 +43,7 @@ internal fun ReadableMap.deserializeTCFUserDecisions(): TCFUserDecisions {
     val vendors = getArray("vendors")?.let {
         val list = mutableListOf<TCFUserDecisionOnVendor>()
         for (i in 0 until it.size()) {
-            list.add(it.getMap(i).deserializeTCFUserDecisionOnVendor())
+            it.getMap(i)?.let { it1 -> list.add(it1.deserializeTCFUserDecisionOnVendor()) }
         }
         list
     }
@@ -51,7 +51,7 @@ internal fun ReadableMap.deserializeTCFUserDecisions(): TCFUserDecisions {
     val adTechProviderDecisions = getArray("adTechProviders")?.let {
         val list = mutableListOf<AdTechProviderDecision>()
         for (i in 0 until it.size()) {
-            list.add(it.getMap(i).deserializeAdTechProviderDecision())
+            it.getMap(i)?.let { it1 -> list.add(it1.deserializeAdTechProviderDecision()) }
         }
         list
     }
