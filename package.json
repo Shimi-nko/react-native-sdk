@@ -3,6 +3,7 @@
     "version": "2.18.6",
     "description": "Usercentrics SDK",
     "homepage": "https://usercentrics.com",
+    "react-native": "src/index.ts",
     "main": "lib/index.js",
     "types": "lib/index.d.ts",
     "author": "Usercentrics <developer@usercentrics.com>",
@@ -75,5 +76,13 @@
     },
     "bugs": {
         "url": "https://github.com/Usercentrics/react-native-sdk/issues"
+    },
+    "codegenConfig": {
+        "name": "UsercentricsSpec",
+        "type": "modules",
+        "jsSrcsDir": "src",
+        "android": {
+            "javaPackageName": "com.usercentrics.reactnativeusercentrics"
+        }
     }
 }
