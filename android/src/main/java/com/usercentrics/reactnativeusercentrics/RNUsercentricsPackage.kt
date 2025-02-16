@@ -1,21 +1,13 @@
 package com.usercentrics.reactnativeusercentrics
 
-import com.facebook.react.ReactPackage
+import com.facebook.react.BaseReactPackage
 import com.facebook.react.bridge.NativeModule
 import com.facebook.react.bridge.ReactApplicationContext
-import com.facebook.react.uimanager.ViewManager
-import com.usercentrics.reactnativeusercentrics.api.UsercentricsProxyImpl
+import com.facebook.react.module.model.ReactModuleInfoProvider
 
-class RNUsercentricsPackage : ReactPackage {
+class RNUsercentricsPackage : BaseReactPackage() {
 
-    private val usercentricsProxy = UsercentricsProxyImpl()
+    override fun getModule(name: String?, reactContext: ReactApplicationContext): NativeModule? = null
 
-    override fun createViewManagers(reactContext: ReactApplicationContext): MutableList<ViewManager<*, *>> {
-        return mutableListOf()
-    }
-
-    override fun createNativeModules(reactContext: ReactApplicationContext): MutableList<NativeModule> {
-        val reactContextProvider = ReactContextProviderImpl(reactContext)
-        return mutableListOf(RNUsercentricsModule(reactContext, usercentricsProxy, reactContextProvider))
-    }
+    override fun getReactModuleInfoProvider(): ReactModuleInfoProvider? = null
 }
