@@ -14,8 +14,7 @@ Pod::Spec.new do |s|
 
   s.source       = { :git => "https://github.com/Usercentrics/usercentrics-react-native.git", :tag => "v#{s.version}" }
   s.source_files  = "ios/**/*.{h,m,swift}"
-
-  s.dependency 'React'
   s.dependency 'UsercentricsUI', "#{package['iosPackageVersion']}"
+  install_modules_dependencies(s)
 
 end
