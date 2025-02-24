@@ -1,6 +1,10 @@
 def usercentrics_version = "2.18.6"
 version usercentrics_version
 
+def isNewArchitectureEnabled() {
+    return project.hasProperty("newArchEnabled") && project.newArchEnabled == "true"
+}
+
 buildscript {
     ext.kotlin_version = '2.0.21'
 
@@ -37,13 +41,25 @@ android {
     }
 
     sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
+        main {
+            if (isNewArchitectureEnabled()) {
+                java.srcDirs += [
+                        "src/newarch",
+                        // Codegen specs
+                        "generated/java",
+                        "generated/jni"
+                ]
+            } else {
+                java.srcDirs += ["src/oldarch"]
+            }
+        }
     }
 
     defaultConfig {
         minSdkVersion 24
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFile "proguard-rules.pro"
+        buildConfigField("boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString())
     }
 }
 
