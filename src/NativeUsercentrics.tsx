@@ -1,5 +1,10 @@
 import {TurboModule, TurboModuleRegistry} from "react-native";
-import {UsercentricsService} from "./models/UsercentricsService";
+
+enum ConsentDisclosureType {
+    cookie = 0,
+    web = 1,
+    app = 2
+}
 
 enum FirstLayerMobileVariant {
     sheet = 0,
@@ -81,7 +86,6 @@ enum NetworkMode {
 }
 
 enum ButtonType {
-
     acceptAll = "ACCEPT_ALL",
     denyAll = "DENY_ALL",
     more = "MORE",
@@ -89,14 +93,12 @@ enum ButtonType {
 }
 
 enum SectionAlignment {
-
     left = "START",
     right = "END",
     center = "CENTER"
 }
 
 enum UsercentricsLayout {
-
     full = "FULL",
     sheet = "SHEET",
     popupCenter = "POPUP_CENTER",
@@ -117,7 +119,6 @@ enum UsercentricsLoggerLevel {
 }
 
 enum LegalLinksSettings {
-
     firstLayerOnly = "FIRST_LAYER_ONLY",
     secondLayerOnly = "SECOND_LAYER_ONLY",
     both = "BOTH",
@@ -138,7 +139,6 @@ type BannerFont = {
 }
 
 type ToggleStyleSettings = {
-
     activeBackgroundColorHex?: string;
     inactiveBackgroundColorHex?: string;
     disabledBackgroundColorHex?: string;
@@ -428,7 +428,6 @@ type UsercentricsCategory = {
 }
 
 type UsercentricsConsentUserResponse = {
-
     controllerId: string
     userInteraction: UsercentricsUserInteraction
     consents: UsercentricsServiceConsent[]
@@ -598,7 +597,6 @@ type UsercentricsLabels = {
     headerModal: string
     secondLayerDescriptionHtml: string
     secondLayerTitle: string
-
     // Optional
     settings: string
     subConsents: string
@@ -613,7 +611,7 @@ type UsercentricsLabels = {
     advanced: string
     processingCompany: string
     name: string
-    explicit: string
+    explicitLabel: string
     implicit: string
     btnMoreInfo: string
     furtherInformationOptOut: string
@@ -707,57 +705,114 @@ type TCF2ChangedPurposes = {
     legIntPurposes: number[]
 }
 
+type UsercentricsService = {
+    templateId: string
+    version: string
+    categorySlug: string
+    isEssential: boolean
+    type: string
+    dataProcessor: string
+    dataPurposes: string[]
+    processingCompany: string
+    nameOfProcessingCompany: string
+    addressOfProcessingCompany: string
+    descriptionOfService: string
+    languagesAvailable: string[]
+    dataCollectedList: string[]
+    dataPurposesList: string[]
+    dataRecipientsList: string[]
+    legalBasisList: string[]
+    retentionPeriodList: string[]
+    subConsents: string[]
+    language: string
+    linkToDpa: string
+    legalGround: string
+    optOutUrl: string
+    policyOfProcessorUrl: string
+    retentionPeriodDescription: string
+    dataProtectionOfficer: string
+    privacyPolicyURL: string
+    cookiePolicyURL: string
+    locationOfProcessing: string
+    dataCollectedDescription: string
+    thirdCountryTransfer: string
+    description: string
+    cookieMaxAgeSeconds: number
+    usesNonCookieAccess?: boolean
+    deviceStorageDisclosureUrl: string
+    technologyUsed: string[]
+    isDeactivated?: boolean
+    disableLegalBasis?: boolean
+    deviceStorage?: ConsentDisclosureObject
+    isHidden: boolean
+}
+
+type ConsentDisclosure = {
+    identifier?: string
+    type?: ConsentDisclosureType
+    name?: string
+    maxAgeSeconds?: number
+    cookieRefresh: boolean
+    purposes: number[]
+    domain?: string
+    description?: string
+}
+
+type ConsentDisclosureObject = {
+    disclosures: ConsentDisclosure[]
+}
+
 export interface Spec extends TurboModule {
 
-    configure(options: UsercentricsOptions):Promise<void>
+    configure: (options: UsercentricsOptions) => Promise<void>
 
-    status(): Promise<UsercentricsReadyStatus>
+    status: () => Promise<UsercentricsReadyStatus>
 
-    showFirstLayer(options?: BannerSettings): Promise<UsercentricsConsentUserResponse>
+    showFirstLayer: (options?: BannerSettings) => Promise<UsercentricsConsentUserResponse>
 
-    showSecondLayer(options?: BannerSettings): Promise<UsercentricsConsentUserResponse>
+    showSecondLayer: (options?: BannerSettings) => Promise<UsercentricsConsentUserResponse>
 
-    restoreUserSession(controllerId: string): Promise<UsercentricsReadyStatus>
+    restoreUserSession: (controllerId: string) => Promise<UsercentricsReadyStatus>
 
-    getControllerId(): Promise<string>
+    getControllerId: () => Promise<string>
 
-    getABTestingVariant(): Promise<string | null>
+    getABTestingVariant: () => Promise<string | null>
 
-    getConsents(): Promise<[UsercentricsServiceConsent]>
+    getConsents: () => Promise<UsercentricsServiceConsent[]>
 
-    getCMPData(): Promise<UsercentricsCMPData>
+    getCMPData: () => Promise<UsercentricsCMPData>
 
-    getUserSessionData(): Promise<string>
+    getUserSessionData: () => Promise<string>
 
-    getCCPAData(): Promise<CCPAData>
+    getCCPAData: () => Promise<CCPAData>
 
-    getTCFData(): Promise<TCFData>
+    getTCFData: () => Promise<TCFData>
 
-    getAdditionalConsentModeData(): Promise<AdditionalConsentModeData>
+    getAdditionalConsentModeData: () => Promise<AdditionalConsentModeData>
 
-    changeLanguage(language: string): Promise<void>
+    changeLanguage: (language: string) => Promise<void>
 
-    acceptAll(consentType: UsercentricsConsentType): Promise<[UsercentricsServiceConsent]>
+    acceptAll: (consentType: UsercentricsConsentType) => Promise<UsercentricsServiceConsent[]>
 
-    acceptAllForTCF(fromLayer: TCFDecisionUILayer, consentType: UsercentricsConsentType): Promise<[UsercentricsServiceConsent]>
+    acceptAllForTCF: (fromLayer: TCFDecisionUILayer, consentType: UsercentricsConsentType) => Promise<UsercentricsServiceConsent[]>
 
-    denyAll(consentType: UsercentricsConsentType): Promise<[UsercentricsServiceConsent]>
+    denyAll: (consentType: UsercentricsConsentType) => Promise<UsercentricsServiceConsent[]>
 
-    denyAllForTCF(fromLayer: TCFDecisionUILayer, consentType: UsercentricsConsentType): Promise<[UsercentricsServiceConsent]>
+    denyAllForTCF: (fromLayer: TCFDecisionUILayer, consentType: UsercentricsConsentType) => Promise<UsercentricsServiceConsent[]>
 
-    saveDecisions(decisions: UserDecision[], consentType: UsercentricsConsentType): Promise<[UsercentricsServiceConsent]>
+    saveDecisions: (decisions: UserDecision[], consentType: UsercentricsConsentType) => Promise<UsercentricsServiceConsent[]>
 
-    saveDecisionsForTCF(tcfDecisions: TCFUserDecisions, fromLayer: TCFDecisionUILayer, decisions: UserDecision[], consentType: UsercentricsConsentType): Promise<[UsercentricsServiceConsent]>
+    saveDecisionsForTCF: (tcfDecisions: TCFUserDecisions, fromLayer: TCFDecisionUILayer, decisions: UserDecision[], consentType: UsercentricsConsentType) => Promise<UsercentricsServiceConsent[]>
 
-    saveOptOutForCCPA(isOptedOut: boolean, consentType: UsercentricsConsentType): Promise<[UsercentricsServiceConsent]>
+    saveOptOutForCCPA: (isOptedOut: boolean, consentType: UsercentricsConsentType) => Promise<UsercentricsServiceConsent[]>
 
-    setCMPId(id: number):Promise<void>
+    setCMPId: (id: number) => Promise<void>
 
-    setABTestingVariant(variant: string):Promise<void>
+    setABTestingVariant: (variant: string) => Promise<void>
 
-    track(event: UsercentricsAnalyticsEventType):Promise<void>
+    track: (event: UsercentricsAnalyticsEventType) => Promise<void>
 
-    clearUserSession(): Promise<UsercentricsReadyStatus>
+    clearUserSession: () =>Promise<UsercentricsReadyStatus>
 }
 
 export default TurboModuleRegistry.get<Spec>("Usercentrics") as Spec | null;
