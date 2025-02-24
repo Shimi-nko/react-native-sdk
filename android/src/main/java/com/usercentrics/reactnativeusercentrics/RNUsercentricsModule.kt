@@ -25,11 +25,11 @@ class RNUsercentricsModule(reactContext: ReactApplicationContext) : NativeUserce
         usercentricsProxy.initialize(context, usercentricsOptions)
     }
 
-    override fun status(promise: Promise?) {
+    override fun status(promise: Promise) {
         usercentricsProxy.isReady({
-            promise?.resolve(it.toWritableMap())
+            promise.resolve(it.toWritableMap())
         }, {
-            promise?.reject(it)
+            promise.reject(it)
         })
     }
 
@@ -52,101 +52,101 @@ class RNUsercentricsModule(reactContext: ReactApplicationContext) : NativeUserce
         }
     }
 
-    override fun showSecondLayer(options: ReadableMap?, promise: Promise?) {
+    override fun showSecondLayer(options: ReadableMap?, promise: Promise) {
         runOnUiThread {
             try {
                 val bannerSettings = options?.bannerSettingsFromMap(context)
-                usercentricsProxy.showSecondLayer(activity, bannerSettings, promise!!)
+                usercentricsProxy.showSecondLayer(activity, bannerSettings, promise)
             } catch (e: Exception) {
-                promise?.reject(e)
+                promise.reject(e)
             }
         }
     }
 
-    override fun restoreUserSession(controllerId: String?, promise: Promise?) {
+    override fun restoreUserSession(controllerId: String?, promise: Promise) {
         usercentricsProxy.instance.restoreUserSession(controllerId!!, {
-            promise?.resolve(it.toWritableMap())
+            promise.resolve(it.toWritableMap())
         }, {
-            promise?.reject(it)
+            promise.reject(it)
         })
     }
 
-    override fun getControllerId(promise: Promise?) {
-        promise?.resolve(usercentricsProxy.instance.getControllerId())
+    override fun getControllerId(promise: Promise) {
+        promise.resolve(usercentricsProxy.instance.getControllerId())
     }
 
-    override fun getABTestingVariant(promise: Promise?) {
-        promise?.resolve(usercentricsProxy.instance.getABTestingVariant())
+    override fun getABTestingVariant(promise: Promise) {
+        promise.resolve(usercentricsProxy.instance.getABTestingVariant())
     }
 
-    override fun getConsents(promise: Promise?) {
-        promise?.resolve(usercentricsProxy.instance.getConsents().toWritableArray())
+    override fun getConsents(promise: Promise) {
+        promise.resolve(usercentricsProxy.instance.getConsents().toWritableArray())
     }
 
-    override fun getCMPData(promise: Promise?) {
-        promise?.resolve(usercentricsProxy.instance.getCMPData().serialize())
+    override fun getCMPData(promise: Promise) {
+        promise.resolve(usercentricsProxy.instance.getCMPData().serialize())
     }
 
-    override fun getUserSessionData(promise: Promise?) {
-        promise?.resolve(usercentricsProxy.instance.getUserSessionData())
+    override fun getUserSessionData(promise: Promise) {
+        promise.resolve(usercentricsProxy.instance.getUserSessionData())
     }
 
-    override fun getCCPAData(promise: Promise?) {
-        promise?.resolve(usercentricsProxy.instance.getCMPData().serialize())
+    override fun getCCPAData(promise: Promise) {
+        promise.resolve(usercentricsProxy.instance.getCMPData().serialize())
     }
 
-    override fun getTCFData(promise: Promise?) {
+    override fun getTCFData(promise: Promise) {
         usercentricsProxy.instance.getTCFData {
-            promise?.resolve(it.serialize())
+            promise.resolve(it.serialize())
         }
     }
 
-    override fun getAdditionalConsentModeData(promise: Promise?) {
-        promise?.resolve(usercentricsProxy.instance.getAdditionalConsentModeData().serialize())
+    override fun getAdditionalConsentModeData(promise: Promise) {
+        promise.resolve(usercentricsProxy.instance.getAdditionalConsentModeData().serialize())
     }
 
-    override fun changeLanguage(language: String?, promise: Promise?) {
+    override fun changeLanguage(language: String?, promise: Promise) {
         usercentricsProxy.instance.changeLanguage(language!!, {
-            promise?.resolve(null)
+            promise.resolve(null)
         }, {
-            promise?.reject(it)
+            promise.reject(it)
         })
     }
 
-    override fun acceptAll(consentType: Double, promise: Promise?) {
-        promise?.resolve(
+    override fun acceptAll(consentType: Double, promise: Promise) {
+        promise.resolve(
             usercentricsProxy.instance.acceptAll(
                 UsercentricsConsentType.entries[consentType.toInt()]
             ).toWritableArray()
         )
     }
 
-    override fun acceptAllForTCF(fromLayer: Double, consentType: Double, promise: Promise?) {
-        promise?.resolve(
+    override fun acceptAllForTCF(fromLayer: Double, consentType: Double, promise: Promise) {
+        promise.resolve(
             usercentricsProxy.instance.acceptAllForTCF(
                 TCFDecisionUILayer.entries[fromLayer.toInt()], UsercentricsConsentType.entries[consentType.toInt()]
             ).toWritableArray()
         )
     }
 
-    override fun denyAll(consentType: Double, promise: Promise?) {
-        promise?.resolve(
+    override fun denyAll(consentType: Double, promise: Promise) {
+        promise.resolve(
             usercentricsProxy.instance.denyAll(
                 UsercentricsConsentType.entries[consentType.toInt()]
             ).toWritableArray()
         )
     }
 
-    override fun denyAllForTCF(fromLayer: Double, consentType: Double, promise: Promise?) {
-        promise?.resolve(
+    override fun denyAllForTCF(fromLayer: Double, consentType: Double, promise: Promise) {
+        promise.resolve(
             usercentricsProxy.instance.denyAllForTCF(
                 TCFDecisionUILayer.entries[fromLayer.toInt()], UsercentricsConsentType.entries[consentType.toInt()]
             ).toWritableArray()
         )
     }
 
-    override fun saveDecisions(decisions: ReadableArray?, consentType: Double, promise: Promise?) {
-        promise?.resolve(
+    override fun saveDecisions(decisions: ReadableArray?, consentType: Double, promise: Promise) {
+        promise.resolve(
             usercentricsProxy.instance.saveDecisions(
                 decisions?.deserializeUserDecision()!!, UsercentricsConsentType.entries[consentType.toInt()]
             ).toWritableArray()
@@ -158,9 +158,9 @@ class RNUsercentricsModule(reactContext: ReactApplicationContext) : NativeUserce
         fromLayer: Double,
         decisions: ReadableArray?,
         consentType: Double,
-        promise: Promise?
+        promise: Promise
     ) {
-        promise?.resolve(
+        promise.resolve(
             usercentricsProxy.instance.saveDecisionsForTCF(
                 tcfDecisions?.deserializeTCFUserDecisions()!!,
                 TCFDecisionUILayer.entries[fromLayer.toInt()],
@@ -170,34 +170,33 @@ class RNUsercentricsModule(reactContext: ReactApplicationContext) : NativeUserce
         )
     }
 
-    override fun saveOptOutForCCPA(isOptedOut: Boolean, consentType: Double, promise: Promise?) {
-        promise?.resolve(
+    override fun saveOptOutForCCPA(isOptedOut: Boolean, consentType: Double, promise: Promise) {
+        promise.resolve(
             usercentricsProxy.instance.saveOptOutForCCPA(
                 isOptedOut, UsercentricsConsentType.entries[consentType.toInt()]
             ).toWritableArray()
         )
     }
 
-    override fun setCMPId(id: Double, promise: Promise?) {
+    override fun setCMPId(id: Double, promise: Promise) {
         usercentricsProxy.instance.setCMPId(id.toInt())
     }
 
-    override fun setABTestingVariant(variant: String?, promise: Promise?) {
+    override fun setABTestingVariant(variant: String?, promise: Promise) {
         usercentricsProxy.instance.setABTestingVariant(variant!!)
     }
 
-    override fun track(event: Double, promise: Promise?) {
+    override fun track(event: Double, promise: Promise) {
         usercentricsProxy.instance.track(UsercentricsAnalyticsEventType.entries[event.toInt()])
     }
 
-    override fun clearUserSession(promise: Promise?) {
+    override fun clearUserSession(promise: Promise) {
         usercentricsProxy.instance.clearUserSession({
-            promise?.resolve(it.toWritableMap())
+            promise.resolve(it.toWritableMap())
         }, {
-            promise?.reject(it)
+            promise.reject(it)
         })
     }
-
 
     companion object {
         const val NAME = "Usercentrics"
