@@ -815,4 +815,4 @@ export interface Spec extends TurboModule {
     clearUserSession: () =>Promise<UsercentricsReadyStatus>
 }
 
-export default TurboModuleRegistry.get<Spec>("Usercentrics") as Spec | null;
+export default TurboModuleRegistry.getEnforcing<Spec>("Usercentrics");
