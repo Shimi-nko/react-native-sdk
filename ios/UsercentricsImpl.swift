@@ -8,10 +8,6 @@ import UIKit
     var usercentricsManager: UsercentricsManager = UsercentricsManagerImplementation()
     var queue: DispatchQueueManager = DispatchQueue.main
 
-    @objc static func requiresMainQueueSetup() -> Bool {
-        return true
-    }
-
     @objc public func configure(options: NSDictionary) -> Void {
         queue.async { [weak self] in
             guard

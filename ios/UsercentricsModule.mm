@@ -1,4 +1,4 @@
-#import "Usercentrics.h"
+#import "UsercentricsModule.h"
 
 #if __has_include("react_native_usercentrics-Swift.h")
 #import "react_native_usercentrics-Swift.h"
@@ -20,109 +20,109 @@
 
 RCT_EXPORT_MODULE()
 
++ (BOOL)requiresMainQueueSetup
+{
+    return YES;
+}
+
 RCT_EXPORT_METHOD(configure:(NSDictionary *)options
                   resolve:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject) {
-    [usercentricsImpl configure:options];
+    [usercentricsImpl configureWithOptions:options];
 }
 
 RCT_EXPORT_METHOD(showFirstLayer:(NSDictionary *)options
                   resolve:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject) {
-    [usercentricsImpl showFirstLayer:options resolve:resolve reject:reject];
+    [usercentricsImpl showFirstLayerWithDict:options resolve:resolve reject:reject];
 }
 
 RCT_EXPORT_METHOD(showSecondLayer:(NSDictionary *)options
                   resolve:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject) {
-    [usercentricsImpl showSecondLayer:options resolve:resolve reject:reject];
+    [usercentricsImpl showSecondLayerWithDict:options resolve:resolve reject:reject];
 }
 
 RCT_EXPORT_METHOD(restoreUserSession:(NSString *)controllerId
                   resolve:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject) {
-    [usercentricsImpl restoreUserSession:controllerId resolve:resolve reject:reject];
+    [usercentricsImpl restoreUserSessionWithControllerId:controllerId resolve:resolve reject:reject];
 }
 
 RCT_EXPORT_METHOD(isReady:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject) {
-    [usercentricsImpl isReady:resolve reject:reject];
-}
-
-RCT_EXPORT_METHOD(getTCFString:(RCTPromiseResolveBlock)resolve
-                  reject:(RCTPromiseRejectBlock)reject) {
-    [usercentricsImpl getTCFString:resolve reject:reject];
+    [usercentricsImpl isReadyWithResolve:resolve reject:reject];
 }
 
 RCT_EXPORT_METHOD(getControllerId:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject) {
-    [usercentricsImpl getControllerId:resolve reject:reject];
+    [usercentricsImpl getControllerIdWithResolve:resolve reject:reject];
 }
 
 RCT_EXPORT_METHOD(getABTestingVariant:(RCTPromiseResolveBlock)resolve
                 reject:(RCTPromiseRejectBlock)reject) {
-    [usercentricsImpl getABTestingVariant:resolve reject:reject];
+    [usercentricsImpl getABTestingVariantWithResolve:resolve reject:reject];
 }
 
 RCT_EXPORT_METHOD(getConsents:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject) {
-    [usercentricsImpl getConsents:resolve reject:reject];
+    [usercentricsImpl getConsentsWithResolve:resolve reject:reject];
 }
 
 RCT_EXPORT_METHOD(getCMPData:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject) {
-    [usercentricsImpl getCMPData:resolve reject:reject];
+    [usercentricsImpl getCMPDataWithResolve:resolve reject:reject];
 }
 
 RCT_EXPORT_METHOD(getUserSessionData:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject) {
-    [usercentricsImpl getUserSessionData:resolve reject:reject];
+    [usercentricsImpl getUserSessionDataWithResolve:resolve reject:reject];
 }
 
 RCT_EXPORT_METHOD(getUSPData:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject) {
-    [usercentricsImpl getUSPData:resolve reject:reject];
+    [usercentricsImpl getUSPDataWithResolve:resolve reject:reject];
 }
 RCT_EXPORT_METHOD(getTCFData:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject) {
-    [usercentricsImpl getTCFData:resolve reject:reject];
+    [usercentricsImpl getTCFDataWithResolve:resolve reject:reject];
 }
 
 RCT_EXPORT_METHOD(getAdditionalConsentModeData:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject) {
-    [usercentricsImpl getAdditionalConsentModeData:resolve reject:reject];
+    [usercentricsImpl getAdditionalConsentModeDataWithResolve:resolve reject:reject];
 }
 
 RCT_EXPORT_METHOD(changeLanguage:(NSString *)language
                   resolve:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject) {
-    [usercentricsImpl changeLanguage:language resolve:resolve reject:reject];
+    [usercentricsImpl changeLanguageWithLanguage:language resolve:resolve reject:reject];
 }
 
-RCT_EXPORT_METHOD(acceptAllForTCF:(NSInteger *)fromLayer
+RCT_EXPORT_METHOD(acceptAllForTCF:(NSInteger)fromLayer
                   consentType:(NSInteger)consentType
                   resolve:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject) {
-    [usercentricsImpl acceptAllForTCF:fromLayer consentType:consentType resolve:resolve reject:reject];
+    [usercentricsImpl acceptAllForTCFFromLayer:fromLayer consentType:consentType resolve:resolve reject:reject];
 }
 
-RCT_EXPORT_METHOD(acceptAll:(NSInteger *)consentType
+RCT_EXPORT_METHOD(acceptAll:(NSInteger)consentType
                   resolve:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject) {
-    [usercentricsImpl acceptAll:consentType resolve:resolve reject:reject];
+    [usercentricsImpl acceptAllWithConsentType:consentType resolve:resolve reject:reject];
 }
 
-RCT_EXPORT_METHOD(denyAllForTCF:(NSInteger *)fromLayer
+RCT_EXPORT_METHOD(denyAllForTCF:(NSInteger)fromLayer
                   consentType:(NSInteger)consentType
                   resolve:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject) {
-    [usercentricsImpl denyAllForTCF:fromLayer consentType:consentType resolve:resolve reject:reject];
+    [usercentricsImpl denyAllForTCFFromLayer:fromLayer consentType:consentType resolve:resolve reject:reject];
 }
 
-RCT_EXPORT_METHOD(denyAll:(NSInteger *)consentType
+RCT_EXPORT_METHOD(denyAll:(NSInteger)consentType
                   resolve:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject) {
-    [usercentricsImpl denyAll:consentType resolve:resolve reject:reject];
+    [usercentricsImpl denyAllWithConsentType:consentType resolve:resolve reject:reject];
 }
 
 RCT_EXPORT_METHOD(saveDecisionsForTCF:(NSDictionary *)tcfDecisions
@@ -131,38 +131,38 @@ RCT_EXPORT_METHOD(saveDecisionsForTCF:(NSDictionary *)tcfDecisions
                   consentType:(NSInteger)consentType
                   resolve:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject) {
-    [usercentricsImpl saveDecisionsForTCF:tcfDecisions fromLayer:fromLayer serviceDecisions: serviceDecisions consentType:consentType resolve:resolve reject:reject];
+    [usercentricsImpl saveDecisionsForTCFWithTcfDecisions:tcfDecisions fromLayer:fromLayer serviceDecisions: serviceDecisions consentType:consentType resolve:resolve reject:reject];
 }
 
 RCT_EXPORT_METHOD(saveDecisions:(NSArray *)serviceDecisions
                   consentType:(NSInteger)consentType
                   resolve:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject) {
-    [usercentricsImpl saveDecisions:serviceDecisions consentType:consentType resolve:resolve reject:reject];
+    [usercentricsImpl saveDecisionsWithDecisions:serviceDecisions consentType:consentType resolve:resolve reject:reject];
 }
 
 RCT_EXPORT_METHOD(saveOptOutForCCPA:(BOOL *)isOptedOut
                   consentType:(NSInteger)consentType
                   resolve:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject) {
-    [usercentricsImpl saveOptOutForCCPA:isOptedOut consentType:consentType resolve:resolve reject:reject];
+    [usercentricsImpl saveOptOutForCCPAWithIsOptedOut:isOptedOut consentType:consentType resolve:resolve reject:reject];
 }
 
-RCT_EXPORT_METHOD(setCMPId:(NSInteger *)id) {
-    [usercentricsImpl setCMPId:id];
+RCT_EXPORT_METHOD(setCMPId:(NSInteger)id) {
+    [usercentricsImpl setCMPIdWithId:id];
 }
 
 RCT_EXPORT_METHOD(setABTestingVariant:(NSString *)variant) {
-    [usercentricsImpl setABTestingVariant:variant];
+    [usercentricsImpl setABTestingVariantWithVariant:variant];
 }
 
-RCT_EXPORT_METHOD(track:(NSInteger *)event) {
-    [usercentricsImpl track:event];
+RCT_EXPORT_METHOD(track:(NSInteger)event) {
+    [usercentricsImpl trackWithEvent:event];
 }
 
 RCT_EXPORT_METHOD(clearUserSession:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject) {
-    [usercentricsImpl clearUserSession:resolve reject:reject];
+    [usercentricsImpl clearUserSessionWithResolve:resolve reject:reject];
 }
 
 #ifdef RCT_NEW_ARCH_ENABLED
