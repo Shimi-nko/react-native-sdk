@@ -207,10 +207,7 @@ dist
 .vscode-test
 
 # yarn v2
-.yarn/cache
-.yarn/unplugged
-.yarn/build-state.yml
-.yarn/install-state.gz
+.yarn
 .pnp.*
 
 ### ReactNative.Buck Stack ###
@@ -258,3 +255,6 @@ google-services.json
 #Lib
 lib/
 # End of https://www.toptal.com/developers/gitignore/api/reactnative
+
+#Fabric
+**/generated
