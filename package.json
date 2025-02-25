@@ -33,7 +33,8 @@
     "!**/.*"
   ],
   "scripts": {
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "lint": "biome lint src",
+    "format": "biome format src",
     "prepack": "bob build",
     "test": "jest src/__tests__/index.test.ts"
   },
@@ -111,9 +112,5 @@
         }
       ]
     ]
-  },
-  "eslintIgnore": [
-    "node_modules/",
-    "lib/"
-  ]
+  }
 }
