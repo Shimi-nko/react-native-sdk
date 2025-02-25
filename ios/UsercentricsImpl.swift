@@ -3,32 +3,27 @@ import Usercentrics
 import UsercentricsUI
 import UIKit
 
-@objc(RNUsercentricsModule)
-class RNUsercentricsModule: NSObject, RCTBridgeModule {
-    
+@objc public class UsercentricsImpl: NSObject {
+
     var usercentricsManager: UsercentricsManager = UsercentricsManagerImplementation()
     var queue: DispatchQueueManager = DispatchQueue.main
 
-    @objc static func moduleName() -> String! {
-        return "RNUsercentricsModule"
-    }
-    
     @objc static func requiresMainQueueSetup() -> Bool {
         return true
     }
-    
-    @objc func configure(_ dict: NSDictionary) -> Void {
+
+    @objc public func configure(options: NSDictionary) -> Void {
         queue.async { [weak self] in
             guard
                 let self = self,
-                let userOptions = UsercentricsOptions.initialize(from: dict)
+                let userOptions = UsercentricsOptions.initialize(from: options)
             else { return }
 
             self.usercentricsManager.configure(options: userOptions)
         }
     }
 
-    @objc func isReady(_ resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
+    @objc public func isReady(resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
         queue.async { [weak self] in
             guard let self = self else { return }
 
@@ -39,8 +34,8 @@ class RNUsercentricsModule: NSObject, RCTBridgeModule {
             }
         }
     }
-    
-    @objc func showFirstLayer(_ dict: NSDictionary, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+
+    @objc public func showFirstLayer(dict: NSDictionary, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
         queue.async { [weak self] in
             guard
                 let self = self
@@ -54,8 +49,8 @@ class RNUsercentricsModule: NSObject, RCTBridgeModule {
             }
         }
     }
-    
-    @objc func showSecondLayer(_ dict: NSDictionary, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+
+    @objc public func showSecondLayer(dict: NSDictionary, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
         queue.async { [weak self] in
             guard
                 let self = self
@@ -69,66 +64,66 @@ class RNUsercentricsModule: NSObject, RCTBridgeModule {
             }
         }
     }
-    
-    @objc func setCMPId(_ id: Int) -> Void {
+
+    @objc public func setCMPId(id: Int) -> Void {
         usercentricsManager.setCMPId(id: Int32(id))
     }
 
-    @objc func setABTestingVariant(_ variant: String) -> Void {
+    @objc public func setABTestingVariant(variant: String) -> Void {
         usercentricsManager.setABTestingVariant(variant: variant)
     }
 
-    @objc func restoreUserSession(_ controllerId: String, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
+    @objc public func restoreUserSession(controllerId: String, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
         usercentricsManager.restoreUserSession(controllerId: controllerId) { status in
             resolve(status.toDictionary())
         } onFailure: { error in
             reject("usercentrics_reactNative_restoreUserSession_error", error.localizedDescription, error)
         }
     }
-    
-    @objc func getControllerId(_ resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
+
+    @objc public func getControllerId(resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
         resolve(usercentricsManager.getControllerId())
     }
-    
-    @objc func getConsents(_ resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
+
+    @objc public func getConsents(resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
         resolve(usercentricsManager.getConsents().toListOfDictionary())
     }
-    
-    @objc func getCMPData(_ resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
+
+    @objc public func getCMPData(resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
         resolve(usercentricsManager.getCMPData().toDictionary())
     }
-    
-    @objc func getTCFData(_ resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
+
+    @objc public func getTCFData(resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
         usercentricsManager.getTCFData { tcfData in
             resolve(tcfData.toDictionary())
         }
     }
-    
-    @objc func getUserSessionData(_ resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
+
+    @objc public func getUserSessionData(resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
         resolve(usercentricsManager.getUserSessionData())
     }
-    
-    @objc func getUSPData(_ resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
+
+    @objc public func getUSPData(resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
         resolve(usercentricsManager.getUSPData().toDictionary())
     }
 
-    @objc func getABTestingVariant(_ resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
+    @objc public func getABTestingVariant(resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
         resolve(usercentricsManager.getABTestingVariant())
     }
 
-    @objc func getAdditionalConsentModeData(_ resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
+    @objc public func getAdditionalConsentModeData(resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
         resolve(usercentricsManager.getAdditionalConsentModeData().toDictionary())
     }
 
-    @objc func changeLanguage(_ language: String, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
+    @objc public func changeLanguage(language: String, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
         usercentricsManager.changeLanguage(language: language) {
             resolve(Void.self)
         } onFailure: { error in
             reject("usercentrics_reactNative_changeLanguage_error", error.localizedDescription, error)
         }
     }
-    
-    @objc func acceptAllForTCF(_ fromLayer: Int,
+
+    @objc public func acceptAllForTCF(fromLayer: Int,
                                consentType: Int,
                                resolve: @escaping RCTPromiseResolveBlock,
                                reject: @escaping RCTPromiseRejectBlock) -> Void {
@@ -136,54 +131,54 @@ class RNUsercentricsModule: NSObject, RCTBridgeModule {
                                                            consentType: UsercentricsConsentType.initialize(from: consentType))
         resolve(services.toListOfDictionary())
     }
-    
-    @objc func acceptAll(_ consentType: Int,
+
+    @objc public func acceptAll(consentType: Int,
                          resolve: @escaping RCTPromiseResolveBlock,
                          reject: @escaping RCTPromiseRejectBlock) -> Void {
         let services = usercentricsManager.acceptAll(consentType: UsercentricsConsentType.initialize(from: consentType))
         resolve(services.toListOfDictionary())
     }
-    
-    @objc func denyAllForTCF(_ fromLayer: Int,
+
+    @objc public func denyAllForTCF(fromLayer: Int,
                              consentType: Int,
                              resolve: @escaping RCTPromiseResolveBlock,
                              reject: @escaping RCTPromiseRejectBlock) -> Void {
         let services = usercentricsManager.denyAllForTCF(fromLayer: .initialize(from: fromLayer), consentType: .initialize(from: consentType))
         resolve(services.toListOfDictionary())
     }
-    
-    @objc func denyAll(_ consentType: Int,
+
+    @objc public func denyAll(consentType: Int,
                        resolve: @escaping RCTPromiseResolveBlock,
                        reject: @escaping RCTPromiseRejectBlock) -> Void {
         let services = usercentricsManager.denyAll(consentType: .initialize(from: consentType))
         resolve(services.toListOfDictionary())
     }
-    
-    @objc func saveDecisionsForTCF(_ tcfDecisions: NSDictionary,
+
+    @objc public func saveDecisionsForTCF(tcfDecisions: NSDictionary,
                                    fromLayer: Int,
                                    serviceDecisions: [NSDictionary],
                                    consentType: Int,
                                    resolve: @escaping RCTPromiseResolveBlock,
                                    reject: @escaping RCTPromiseRejectBlock) -> Void {
-        
+
         let services = usercentricsManager.saveDecisionsForTCF(
             tcfDecisions: TCFUserDecisions(from: tcfDecisions),
             fromLayer: .initialize(from: fromLayer),
             serviceDecisions: serviceDecisions.compactMap { UserDecision(from: $0) },
             consentType: .initialize(from: consentType))
         resolve(services.toListOfDictionary())
-        
+
     }
-    
-    @objc func saveDecisions(_ decisions: [NSDictionary],
+
+    @objc public func saveDecisions(decisions: [NSDictionary],
                              consentType: Int,
                              resolve: @escaping RCTPromiseResolveBlock,
                              reject: @escaping RCTPromiseRejectBlock) -> Void {
         let services = usercentricsManager.saveDecisions(decisions: decisions.compactMap { UserDecision.init(from: $0) }, consentType: .initialize(from: consentType))
         resolve(services.toListOfDictionary())
     }
-    
-    @objc func saveOptOutForCCPA(_ isOptedOut: Bool,
+
+    @objc public func saveOptOutForCCPA(isOptedOut: Bool,
                                  consentType: Int,
                                  resolve: @escaping RCTPromiseResolveBlock,
                                  reject: @escaping RCTPromiseRejectBlock) -> Void {
@@ -191,12 +186,12 @@ class RNUsercentricsModule: NSObject, RCTBridgeModule {
         resolve(services.toListOfDictionary())
     }
 
-    @objc func track(_ event: Int) -> Void {
+    @objc public func track(event: Int) -> Void {
         guard let usercentricsAnalyticsEventType = UsercentricsAnalyticsEventType.initialize(from: event) else { return }
         usercentricsManager.track(event: usercentricsAnalyticsEventType)
     }
-    
-    @objc func clearUserSession(_ resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
+
+    @objc public func clearUserSession(resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) -> Void {
         usercentricsManager.clearUserSession { status in
             resolve(status.toDictionary())
         } onError: { error in
