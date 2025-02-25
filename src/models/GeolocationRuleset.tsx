@@ -1,10 +1,9 @@
 export class GeolocationRuleset {
+  activeSettingsId: string
+  bannerRequiredAtLocation: boolean
 
-    activeSettingsId: string;
-    bannerRequiredAtLocation: boolean;
-
-    constructor(activeSettingsId: string, bannerRequiredAtLocation: boolean) {
-        this.activeSettingsId = activeSettingsId
-        this.bannerRequiredAtLocation = bannerRequiredAtLocation
-    }
+  constructor(activeSettingsId: string, bannerRequiredAtLocation: boolean) {
+    this.activeSettingsId = activeSettingsId
+    this.bannerRequiredAtLocation = bannerRequiredAtLocation
+  }
 }

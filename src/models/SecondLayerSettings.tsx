@@ -1,12 +1,11 @@
-import {ButtonLayout} from ".";
+import { ButtonLayout } from '.'
 
 export class SecondLayerStyleSettings {
+  buttonLayout?: ButtonLayout
+  showCloseButton?: Boolean
 
-    buttonLayout?: ButtonLayout;
-    showCloseButton?: Boolean;
-
-    constructor(buttonLayout?: ButtonLayout, showCloseButton?: Boolean) {
-        this.buttonLayout = buttonLayout;
-        this.showCloseButton = showCloseButton;
-    }
+  constructor(buttonLayout?: ButtonLayout, showCloseButton?: Boolean) {
+    this.buttonLayout = buttonLayout
+    this.showCloseButton = showCloseButton
+  }
 }

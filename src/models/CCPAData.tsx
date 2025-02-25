@@ -1,32 +1,30 @@
 export class CCPAData {
+  /// CCPA version.
+  version: number
 
-    /// CCPA version.
-    version: number
+  /// True if the user opted out the consents, so the user denies the services. False if not, so the user accepts the services.
+  optedOut?: boolean
 
-    /// True if the user opted out the consents, so the user denies the services. False if not, so the user accepts the services.
-    optedOut?: boolean
+  /// Limited Service Provider Agreement Covered Transaction.
+  lspact?: boolean
 
-    /// Limited Service Provider Agreement Covered Transaction.
-    lspact?: boolean
+  /// True if the notice was given. False if not.
+  noticeGiven?: boolean
 
-    /// True if the notice was given. False if not.
-    noticeGiven?: boolean
+  /// Encoded USP String.
+  uspString: string
 
-    /// Encoded USP String.
-    uspString: string
-
-
-    constructor(
-        uspString: string,
-        version: number,
-        optedOut?: boolean,
-        lspact?: boolean,
-        noticeGiven?: boolean
-    ) {
-        this.version = version
-        this.optedOut = optedOut
-        this.lspact = lspact
-        this.noticeGiven = noticeGiven
-        this.uspString = uspString
-    }
+  constructor(
+    uspString: string,
+    version: number,
+    optedOut?: boolean,
+    lspact?: boolean,
+    noticeGiven?: boolean,
+  ) {
+    this.version = version
+    this.optedOut = optedOut
+    this.lspact = lspact
+    this.noticeGiven = noticeGiven
+    this.uspString = uspString
+  }
 }
